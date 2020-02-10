@@ -1,6 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+
+  const storeUser = useSelector(state => state);
+  const dispatch = useDispatch();
+
   let [userData, setUserQuery] = useState([]);
   let [searchQuery, setSearchQuery] = useState("");
   
@@ -25,11 +31,20 @@ const App = () => {
   const newQuery = (e) => {
     setSearchQuery(e.target.value)
   }
+
+  const storedata = () => {
+    dispatch({
+      type: "store",
+      payload: userData
+    })
+  }
   
   return (
     <div>
     <h1>User search results</h1>
     <input type="text" onChange={newQuery} value={searchQuery}></input>
+    <button onClick={storedata}>Store User Details</button>
+  <h3>{ console.log(storeUser)}</h3>
     {userData ? userData.map((n, i) => {
       return (
         <div key={i}>
